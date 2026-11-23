@@ -46,36 +46,145 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --navy-utama: #0F2C59;
-            --navy-gelap: #0A1E3F;
-            --latar-halaman: #F4F6F9;
-            --garis-halus: #E2E8F0;
+            --primary-navy: #15345B;
+            --secondary-blue: #2878B8;
+            --light-blue: #EAF3FA;
+            --bg-page: #F8FAFC;
+            --white: #FFFFFF;
+            --success-green: #20A779;
+            --warning-amber: #F3B64B;
+            --text-main: #263445;
+            --text-secondary: #64748B;
+            --border-color: #E2E8F0;
+            --radius-card: 14px;
+            --transition-smooth: all 0.25s ease;
         }
+
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--latar-halaman);
-            color: #1E293B;
+            font-weight: 400;
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            line-height: 1.65;
+            overflow-x: hidden;
         }
-        .card-auth {
-            background-color: #FFFFFF;
-            border: 1px solid var(--garis-halus);
+
+        h1, .fw-heading {
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .brand-logo-box {
+            width: 52px;
+            height: 52px;
             border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(15, 44, 89, 0.05);
+            background-color: var(--light-blue);
+            color: var(--secondary-blue);
+            border: 1px solid rgba(40, 120, 184, 0.22);
+            transition: var(--transition-smooth);
         }
-        .btn-navy {
-            background-color: var(--navy-utama);
-            color: #FFFFFF;
+
+        .brand-logo-box:hover {
+            background-color: var(--secondary-blue);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        .card-auth {
+            background-color: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-card);
+            box-shadow: 0 8px 28px rgba(21, 52, 91, 0.06);
+        }
+
+        .form-label {
+            color: var(--text-main);
             font-weight: 600;
-            padding: 0.65rem;
-            border-radius: 8px;
+            font-size: 0.85rem;
+            margin-bottom: 0.45rem;
         }
-        .btn-navy:hover {
-            background-color: var(--navy-gelap);
-            color: #FFFFFF;
+
+        .form-control {
+            border-color: var(--border-color);
+            border-radius: 10px;
+            padding: 0.65rem 0.9rem;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            transition: var(--transition-smooth);
         }
+
+        .form-control::placeholder {
+            color: #94A3B8;
+        }
+
         .form-control:focus {
-            border-color: var(--navy-utama);
-            box-shadow: 0 0 0 0.2rem rgba(15, 44, 89, 0.15);
+            border-color: var(--secondary-blue);
+            box-shadow: 0 0 0 3px rgba(40, 120, 184, 0.14);
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper .form-control {
+            padding-right: 2.75rem;
+        }
+
+        .btn-toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 0.5rem;
+            transform: translateY(-50%);
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-smooth);
+            z-index: 3;
+        }
+
+        .btn-toggle-password:hover,
+        .btn-toggle-password:focus-visible {
+            color: var(--secondary-blue);
+            background-color: var(--light-blue);
+        }
+
+        .btn-primary-blue {
+            background-color: var(--secondary-blue);
+            border: 1.5px solid var(--secondary-blue);
+            color: var(--white);
+            font-weight: 600;
+            padding: 0.7rem 1.25rem;
+            border-radius: 10px;
+            transition: var(--transition-smooth);
+        }
+
+        .btn-primary-blue:hover,
+        .btn-primary-blue:focus-visible {
+            background-color: var(--primary-navy);
+            border-color: var(--primary-navy);
+            color: var(--white);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(21, 52, 91, 0.16);
+        }
+
+        .btn-primary-blue:active {
+            transform: scale(0.98);
+        }
+
+        .auth-link {
+            color: var(--secondary-blue);
+            font-weight: 600;
+            transition: var(--transition-smooth);
+        }
+
+        .auth-link:hover {
+            color: var(--primary-navy);
         }
     </style>
 </head>
@@ -86,16 +195,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="col-md-5 col-lg-4">
                 
                 <div class="text-center mb-4">
-                    <a href="index.php" class="d-inline-flex align-items-center justify-content-center rounded mb-3 text-decoration-none" style="width: 48px; height: 48px; background-color: var(--navy-utama); color: #fff;">
+                    <a href="index.php" class="d-inline-flex align-items-center justify-content-center brand-logo-box mb-3 text-decoration-none">
                         <i class="bi bi-building-check fs-4"></i>
                     </a>
-                    <h1 class="h4 fw-bold" style="color: var(--navy-utama);">Masuk ke Sistem</h1>
-                    <p class="text-muted small">Portal Layanan Publik dan Antrean Digital</p>
+                    <h1 class="h4 fw-heading mb-1" style="color: var(--primary-navy);">Masuk ke Sistem</h1>
+                    <p class="small mb-0" style="color: var(--text-secondary);">Portal Layanan Publik dan Antrean Digital</p>
                 </div>
 
-                <div class="card-auth p-4">
+                <div class="card-auth p-4 p-sm-4">
                     <?php if (!empty($pesan_error)): ?>
-                        <div class="alert alert-danger alert-dismissible fade show small py-2" role="alert">
+                        <div class="alert alert-danger alert-dismissible fade show small py-2.5 px-3 rounded-3" role="alert">
                             <i class="bi bi-exclamation-triangle-fill me-1"></i> <?= $pesan_error ?>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
@@ -103,30 +212,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <form action="" method="POST">
                         <div class="mb-3">
-                            <label class="form-label fw-semibold small">Alamat Email</label>
-                            <input type="email" name="email" class="form-control py-2" placeholder="nama@email.com" required>
+                            <label class="form-label">Alamat Email</label>
+                            <input type="email" name="email" class="form-control" placeholder="nama@email.com" required>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label fw-semibold small">Kata Sandi (Password)</label>
-                            <input type="password" name="password" class="form-control py-2" placeholder="Masukkan password" required>
+                            <label class="form-label">Kata Sandi (Password)</label>
+                            <div class="password-wrapper">
+                                <input type="password" name="password" id="loginPassword" class="form-control" placeholder="Masukkan password" required>
+                                <button type="button" class="btn-toggle-password" id="togglePassword" aria-label="Tampilkan atau sembunyikan kata sandi">
+                                    <i class="bi bi-eye" id="iconPassword"></i>
+                                </button>
+                            </div>
                         </div>
 
-                        <button type="submit" class="btn btn-navy w-100 mt-2 py-2">Masuk Sistem</button>
+                        <button type="submit" class="btn btn-primary-blue w-100 mt-2">Masuk Sistem</button>
                     </form>
-
-                    <hr class="my-4 text-muted">
-                    
-                    <div class="p-3 rounded bg-light border text-start" style="font-size: 0.78rem;">
-                        <span class="fw-bold text-dark d-block mb-1"><i class="bi bi-info-circle me-1"></i> Akun Demo Petugas (Admin):</span>
-                        <span class="text-muted">Email:</span> <code>admin@desa.go.id</code><br>
-                        <span class="text-muted">Password:</span> <code>admin123</code>
-                    </div>
                 </div>
 
-                <div class="text-center mt-4 small text-muted">
-                    Belum punya akun warga? <a href="register.php" class="fw-semibold text-decoration-none" style="color: var(--navy-utama);">Daftar di sini</a><br>
-                    <a href="index.php" class="text-decoration-none text-muted small mt-2 d-inline-block">&larr; Kembali ke Beranda Utama</a>
+                <div class="text-center mt-4 small" style="color: var(--text-secondary);">
+                    Belum punya akun warga? <a href="register.php" class="text-decoration-none auth-link">Daftar di sini</a><br>
+                    <a href="index.php" class="text-decoration-none small mt-2 d-inline-block" style="color: var(--text-secondary);">&larr; Kembali ke Beranda Utama</a>
                 </div>
 
             </div>
@@ -134,5 +240,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const togglePassword = document.getElementById('togglePassword');
+        const loginPassword = document.getElementById('loginPassword');
+        const iconPassword = document.getElementById('iconPassword');
+
+        if (togglePassword && loginPassword && iconPassword) {
+            togglePassword.addEventListener('click', function () {
+                const isHidden = loginPassword.getAttribute('type') === 'password';
+                loginPassword.setAttribute('type', isHidden ? 'text' : 'password');
+                iconPassword.classList.toggle('bi-eye', !isHidden);
+                iconPassword.classList.toggle('bi-eye-slash', isHidden);
+            });
+        }
+    </script>
 </body>
 </html>
