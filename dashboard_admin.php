@@ -59,38 +59,225 @@ $q_daftar_antrean = mysqli_query($conn, "SELECT a.*, u.nama_lengkap FROM antrean
     <title>Panel Admin - Layanan Publik Digital</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --navy-utama: #0F2C59;
-            --navy-gelap: #0A1E3F;
-            --latar-halaman: #F4F6F9;
-            --garis-halus: #E2E8F0;
+            --primary-navy: #15345B;
+            --secondary-blue: #2878B8;
+            --light-blue: #EAF3FA;
+            --bg-page: #F8FAFC;
+            --white: #FFFFFF;
+            --success-green: #20A779;
+            --warning-amber: #F3B64B;
+            --text-main: #263445;
+            --text-secondary: #64748B;
+            --border-color: #E2E8F0;
+            --radius-card: 14px;
+            --transition-smooth: all 0.25s ease;
         }
+
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--latar-halaman);
-            color: #1E293B;
+            font-weight: 400;
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            line-height: 1.65;
         }
+
+        h1, h2, h3, .fw-heading {
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
         .navbar-instansi {
-            background-color: #FFFFFF;
-            border-bottom: 1px solid var(--garis-halus);
+            background-color: var(--white);
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 2px 10px rgba(21, 52, 91, 0.04);
         }
-        .card-clean {
-            background-color: #FFFFFF;
-            border: 1px solid var(--garis-halus);
+
+        .brand-badge-icon {
+            width: 40px;
+            height: 40px;
             border-radius: 10px;
-            box-shadow: 0 1px 3px rgba(15, 44, 89, 0.04);
+            background-color: var(--light-blue);
+            color: var(--secondary-blue);
+            border: 1px solid rgba(40, 120, 184, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+            transition: var(--transition-smooth);
         }
-        .btn-navy {
-            background-color: var(--navy-utama);
-            color: #FFFFFF;
+
+        .navbar-brand:hover .brand-badge-icon {
+            background-color: var(--secondary-blue);
+            color: var(--white);
+        }
+
+        .card-clean {
+            background-color: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-card);
+            box-shadow: 0 6px 22px rgba(21, 52, 91, 0.05);
+            transition: var(--transition-smooth);
+        }
+
+        .section-icon-pill {
+            width: 34px;
+            height: 34px;
+            border-radius: 9px;
+            background-color: var(--light-blue);
+            color: var(--secondary-blue);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .nomor-antrean-admin {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--primary-navy);
+            background-color: var(--light-blue);
+            padding: 0.28rem 0.65rem;
+            border-radius: 8px;
+            display: inline-block;
+        }
+
+        .form-control,
+        .form-select {
+            border-color: var(--border-color);
+            border-radius: 9px;
+            color: var(--text-main);
+            transition: var(--transition-smooth);
+        }
+
+        .form-control::placeholder {
+            color: #94A3B8;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--secondary-blue);
+            box-shadow: 0 0 0 3px rgba(40, 120, 184, 0.14);
+        }
+
+        .btn-primary-blue {
+            background-color: var(--secondary-blue);
+            border: 1.5px solid var(--secondary-blue);
+            color: var(--white);
             font-weight: 600;
-            border-radius: 7px;
+            border-radius: 9px;
+            transition: var(--transition-smooth);
         }
-        .btn-navy:hover {
-            background-color: var(--navy-gelap);
-            color: #FFFFFF;
+
+        .btn-primary-blue:hover,
+        .btn-primary-blue:focus-visible {
+            background-color: var(--primary-navy);
+            border-color: var(--primary-navy);
+            color: var(--white);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 14px rgba(21, 52, 91, 0.14);
+        }
+
+        .btn-outline-secondary-blue {
+            border: 1.5px solid var(--secondary-blue);
+            color: var(--secondary-blue);
+            background-color: var(--white);
+            font-weight: 600;
+            border-radius: 9px;
+            transition: var(--transition-smooth);
+        }
+
+        .btn-outline-secondary-blue:hover,
+        .btn-outline-secondary-blue:focus-visible {
+            background-color: var(--light-blue);
+            color: var(--primary-navy);
+            border-color: var(--secondary-blue);
+        }
+
+        .btn-success-soft {
+            background-color: var(--success-green);
+            border: 1.5px solid var(--success-green);
+            color: var(--white);
+            font-weight: 600;
+            border-radius: 9px;
+            transition: var(--transition-smooth);
+        }
+
+        .btn-success-soft:hover,
+        .btn-success-soft:focus-visible {
+            background-color: #188A63;
+            border-color: #188A63;
+            color: var(--white);
+            transform: translateY(-1px);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .badge-status-neutral {
+            background-color: var(--bg-page);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+            font-weight: 600;
+            border-radius: 999px;
+        }
+
+        .badge-status-amber {
+            background-color: rgba(243, 182, 75, 0.2);
+            color: #9A6700;
+            border: 1px solid rgba(243, 182, 75, 0.45);
+            font-weight: 600;
+            border-radius: 999px;
+        }
+
+        .badge-status-blue {
+            background-color: var(--light-blue);
+            color: var(--secondary-blue);
+            border: 1px solid rgba(40, 120, 184, 0.28);
+            font-weight: 600;
+            border-radius: 999px;
+        }
+
+        .badge-status-green {
+            background-color: rgba(32, 167, 121, 0.14);
+            color: #167A58;
+            border: 1px solid rgba(32, 167, 121, 0.32);
+            font-weight: 600;
+            border-radius: 999px;
+        }
+
+        .table-custom thead th {
+            background-color: var(--bg-page);
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            border-bottom: 1px solid var(--border-color);
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+        }
+
+        .table-custom tbody td {
+            border-color: var(--border-color);
+            padding-top: 0.9rem;
+            padding-bottom: 0.9rem;
+            transition: var(--transition-smooth);
+        }
+
+        .table-custom tbody tr:hover td {
+            background-color: rgba(234, 243, 250, 0.45);
+        }
+
+        footer {
+            background-color: var(--white);
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
         }
     </style>
 </head>
@@ -99,37 +286,41 @@ $q_daftar_antrean = mysqli_query($conn, "SELECT a.*, u.nama_lengkap FROM antrean
     <!-- Navbar Admin -->
     <nav class="navbar navbar-expand-lg navbar-instansi sticky-top py-3">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center gap-2" href="index.php">
-                <div class="d-flex align-items-center justify-content-center rounded" style="width: 36px; height: 36px; background-color: var(--navy-utama); color: #fff;">
+            <a class="navbar-brand d-flex align-items-center gap-2.5" href="index.php">
+                <div class="brand-badge-icon">
                     <i class="bi bi-shield-lock"></i>
                 </div>
                 <div>
-                    <span class="fw-bold d-block lh-1" style="color: var(--navy-utama); font-size: 1.05rem;">Panel Admin & Petugas</span>
-                    <small class="text-muted" style="font-size: 0.75rem;">Kelola Verifikasi & Antrean Loket</small>
+                    <span class="fw-heading d-block lh-1" style="color: var(--primary-navy); font-size: 1.06rem;">Panel Admin &amp; Petugas</span>
+                    <small class="d-block mt-0.5" style="font-size: 0.76rem; color: var(--text-secondary); font-weight: 500;">Kelola Verifikasi &amp; Antrean Loket</small>
                 </div>
             </a>
             <div class="d-flex gap-2">
-                <a href="index.php" class="btn btn-outline-secondary btn-sm px-3 py-2"><i class="bi bi-house me-1"></i> Beranda & Monitor</a>
-                <a href="logout.php" class="btn btn-outline-danger btn-sm px-3 py-2"><i class="bi bi-box-arrow-right"></i> Keluar</a>
+                <a href="index.php" class="btn btn-outline-secondary-blue btn-sm px-3 py-2"><i class="bi bi-house me-1"></i> Beranda &amp; Monitor</a>
+                <a href="logout.php" class="btn btn-outline-danger btn-sm px-3 py-2 rounded-3 fw-semibold"><i class="bi bi-box-arrow-right me-1"></i> Keluar</a>
             </div>
         </div>
     </nav>
 
-    <main class="container my-4 flex-grow-1">
+    <main class="container my-4 my-md-5 flex-grow-1">
 
         <?php if (!empty($pesan_sukses)): ?>
-            <div class="alert alert-success alert-dismissible fade show py-2 small" role="alert">
-                <i class="bi bi-check-circle-fill me-1"></i> <?= $pesan_sukses ?>
+            <div class="alert alert-success alert-dismissible fade show small py-2.5 px-3 rounded-3 mb-4" role="alert" style="background-color: rgba(32, 167, 121, 0.12); border: 1px solid rgba(32, 167, 121, 0.3); color: #157353;">
+                <i class="bi bi-check-circle-fill me-1" style="color: var(--success-green);"></i> <?= $pesan_sukses ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         <?php endif; ?>
 
         <!-- Bagian 1: Pengelolaan Antrean Loket -->
         <div class="card-clean p-4 mb-4">
-            <h2 class="h6 fw-bold mb-3 text-dark"><i class="bi bi-people me-1 text-primary"></i> Pengelolaan Antrean Loket Hari Ini (<?= date('d M Y') ?>)</h2>
+            <div class="d-flex align-items-center gap-2.5 mb-3">
+                <span class="section-icon-pill"><i class="bi bi-people"></i></span>
+                <h2 class="h6 fw-heading mb-0" style="color: var(--primary-navy);">Pengelolaan Antrean Loket Hari Ini (<?= date('d M Y') ?>)</h2>
+            </div>
+
             <div class="table-responsive">
-                <table class="table table-hover align-middle small">
-                    <thead class="table-light text-muted">
+                <table class="table table-custom align-middle small mb-0">
+                    <thead>
                         <tr>
                             <th>Nomor</th>
                             <th>Nama Warga</th>
@@ -142,32 +333,32 @@ $q_daftar_antrean = mysqli_query($conn, "SELECT a.*, u.nama_lengkap FROM antrean
                         <?php if (mysqli_num_rows($q_daftar_antrean) > 0): ?>
                             <?php while ($ant = mysqli_fetch_assoc($q_daftar_antrean)): ?>
                                 <tr>
-                                    <td><span class="fw-bold fs-6 text-primary font-monospace"><?= $ant['nomor_antrean'] ?></span></td>
-                                    <td><?= htmlspecialchars($ant['nama_lengkap']) ?></td>
-                                    <td><?= htmlspecialchars($ant['keperluan_loket']) ?></td>
+                                    <td><span class="nomor-antrean-admin"><?= $ant['nomor_antrean'] ?></span></td>
+                                    <td class="fw-medium" style="color: var(--text-main);"><?= htmlspecialchars($ant['nama_lengkap']) ?></td>
+                                    <td style="color: var(--text-secondary);"><?= htmlspecialchars($ant['keperluan_loket']) ?></td>
                                     <td>
                                         <?php 
                                             $st_a = $ant['status_antrean'];
-                                            $badge_a = 'bg-secondary';
-                                            if ($st_a === 'Menunggu') $badge_a = 'bg-secondary';
-                                            elseif ($st_a === 'Dipanggil') $badge_a = 'bg-primary';
-                                            elseif ($st_a === 'Selesai') $badge_a = 'bg-success';
-                                            elseif ($st_a === 'Lewat') $badge_a = 'bg-danger';
+                                            $badge_a = 'badge-status-neutral';
+                                            if ($st_a === 'Menunggu') $badge_a = 'badge-status-amber';
+                                            elseif ($st_a === 'Dipanggil') $badge_a = 'badge-status-blue';
+                                            elseif ($st_a === 'Selesai') $badge_a = 'badge-status-green';
+                                            elseif ($st_a === 'Lewat') $badge_a = 'bg-danger text-white rounded-pill';
                                         ?>
-                                        <span class="badge <?= $badge_a ?>"><?= $st_a ?></span>
+                                        <span class="badge <?= $badge_a ?> px-2.5 py-1"><?= $st_a ?></span>
                                     </td>
                                     <td>
-                                        <div class="d-flex gap-1">
-                                            <a href="dashboard_admin.php?aksi_antrean=panggil&id=<?= $ant['id_antrean'] ?>" class="btn btn-primary btn-sm py-0 px-2" style="font-size: 0.75rem;">Panggil</a>
-                                            <a href="dashboard_admin.php?aksi_antrean=selesai&id=<?= $ant['id_antrean'] ?>" class="btn btn-success btn-sm py-0 px-2" style="font-size: 0.75rem;">Selesai</a>
-                                            <a href="dashboard_admin.php?aksi_antrean=lewat&id=<?= $ant['id_antrean'] ?>" class="btn btn-outline-danger btn-sm py-0 px-2" style="font-size: 0.75rem;">Lewat</a>
+                                        <div class="d-flex flex-wrap gap-1.5">
+                                            <a href="dashboard_admin.php?aksi_antrean=panggil&id=<?= $ant['id_antrean'] ?>" class="btn btn-primary-blue btn-sm py-1 px-2.5" style="font-size: 0.76rem;">Panggil</a>
+                                            <a href="dashboard_admin.php?aksi_antrean=selesai&id=<?= $ant['id_antrean'] ?>" class="btn btn-success-soft btn-sm py-1 px-2.5" style="font-size: 0.76rem;">Selesai</a>
+                                            <a href="dashboard_admin.php?aksi_antrean=lewat&id=<?= $ant['id_antrean'] ?>" class="btn btn-outline-danger btn-sm py-1 px-2.5 rounded-3 fw-semibold" style="font-size: 0.76rem;">Lewat</a>
                                         </div>
                                     </td>
                                 </tr>
                             <?php endwhile; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="5" class="text-center py-3 text-muted">Belum ada warga yang mengambil nomor antrean hari ini.</td>
+                                <td colspan="5" class="text-center py-4" style="color: var(--text-secondary);">Belum ada warga yang mengambil nomor antrean hari ini.</td>
                             </tr>
                         <?php endif; ?>
                     </tbody>
@@ -177,15 +368,19 @@ $q_daftar_antrean = mysqli_query($conn, "SELECT a.*, u.nama_lengkap FROM antrean
 
         <!-- Bagian 2: Verifikasi Pengajuan Surat Warga -->
         <div class="card-clean p-4">
-            <h2 class="h6 fw-bold mb-3 text-dark"><i class="bi bi-file-earmark-check me-1 text-primary"></i> Verifikasi Pengajuan Surat Masuk</h2>
+            <div class="d-flex align-items-center gap-2.5 mb-3">
+                <span class="section-icon-pill"><i class="bi bi-file-earmark-check"></i></span>
+                <h2 class="h6 fw-heading mb-0" style="color: var(--primary-navy);">Verifikasi Pengajuan Surat Masuk</h2>
+            </div>
+
             <div class="table-responsive">
-                <table class="table table-hover align-middle small">
-                    <thead class="table-light text-muted">
+                <table class="table table-custom align-middle small mb-0">
+                    <thead>
                         <tr>
                             <th>Warga</th>
-                            <th>Jenis Surat & Keperluan</th>
+                            <th>Jenis Surat &amp; Keperluan</th>
                             <th>Berkas Syarat</th>
-                            <th>Status & Catatan</th>
+                            <th>Status &amp; Catatan</th>
                             <th>Aksi Verifikasi</th>
                         </tr>
                     </thead>
@@ -194,42 +389,50 @@ $q_daftar_antrean = mysqli_query($conn, "SELECT a.*, u.nama_lengkap FROM antrean
                             <?php while ($surat = mysqli_fetch_assoc($q_semua_surat)): ?>
                                 <tr>
                                     <td>
-                                        <div class="fw-bold text-dark"><?= htmlspecialchars($surat['nama_lengkap']) ?></div>
-                                        <small class="text-muted">NIK: <?= htmlspecialchars($surat['nik']) ?></small>
+                                        <div class="fw-bold" style="color: var(--text-main);"><?= htmlspecialchars($surat['nama_lengkap']) ?></div>
+                                        <small style="color: var(--text-secondary);">NIK: <?= htmlspecialchars($surat['nik']) ?></small>
                                     </td>
                                     <td>
-                                        <div class="fw-semibold text-primary"><?= htmlspecialchars($surat['nama_surat']) ?></div>
-                                        <small class="text-muted"><?= htmlspecialchars($surat['keperluan']) ?></small>
+                                        <div class="fw-semibold" style="color: var(--secondary-blue);"><?= htmlspecialchars($surat['nama_surat']) ?></div>
+                                        <small style="color: var(--text-secondary);"><?= htmlspecialchars($surat['keperluan']) ?></small>
                                     </td>
                                     <td>
-                                        <a href="uploads/<?= htmlspecialchars($surat['file_syarat']) ?>" target="_blank" class="btn btn-outline-secondary btn-sm py-0 px-2" style="font-size: 0.75rem;">
-                                            <i class="bi bi-eye"></i> Cek Berkas
+                                        <a href="uploads/<?= htmlspecialchars($surat['file_syarat']) ?>" target="_blank" class="btn btn-outline-secondary-blue btn-sm py-1 px-2.5" style="font-size: 0.76rem;">
+                                            <i class="bi bi-eye me-1"></i> Cek Berkas
                                         </a>
                                     </td>
                                     <td>
-                                        <span class="badge bg-info text-dark"><?= $surat['status'] ?></span>
+                                        <?php
+                                            $st_s = $surat['status'];
+                                            $badge_s = 'badge-status-blue';
+                                            if ($st_s === 'Menunggu Verifikasi') $badge_s = 'badge-status-amber';
+                                            elseif ($st_s === 'Diproses') $badge_s = 'badge-status-blue';
+                                            elseif ($st_s === 'Selesai') $badge_s = 'badge-status-green';
+                                            elseif ($st_s === 'Ditolak') $badge_s = 'bg-danger text-white rounded-pill';
+                                        ?>
+                                        <span class="badge <?= $badge_s ?> px-2.5 py-1"><?= $st_s ?></span>
                                         <?php if (!empty($surat['catatan_admin'])): ?>
-                                            <div class="text-muted mt-1" style="font-size: 0.7rem;">Catatan: <?= htmlspecialchars($surat['catatan_admin']) ?></div>
+                                            <div class="mt-1.5" style="font-size: 0.74rem; color: var(--text-secondary);">Catatan: <?= htmlspecialchars($surat['catatan_admin']) ?></div>
                                         <?php endif; ?>
                                     </td>
-                                    <td>
-                                        <form action="" method="POST" class="d-flex flex-column gap-1">
+                                    <td style="min-width: 210px;">
+                                        <form action="" method="POST" class="d-flex flex-column gap-1.5">
                                             <input type="hidden" name="id_pengajuan" value="<?= $surat['id_pengajuan'] ?>">
-                                            <select name="status_baru" class="form-select form-select-sm py-0" style="font-size: 0.75rem;" required>
+                                            <select name="status_baru" class="form-select form-select-sm py-1.5" style="font-size: 0.78rem;" required>
                                                 <option value="Menunggu Verifikasi" <?= $surat['status'] == 'Menunggu Verifikasi' ? 'selected' : '' ?>>Menunggu</option>
                                                 <option value="Diproses" <?= $surat['status'] == 'Diproses' ? 'selected' : '' ?>>Diproses</option>
                                                 <option value="Selesai" <?= $surat['status'] == 'Selesai' ? 'selected' : '' ?>>Selesai</option>
                                                 <option value="Ditolak" <?= $surat['status'] == 'Ditolak' ? 'selected' : '' ?>>Ditolak</option>
                                             </select>
-                                            <input type="text" name="catatan_admin" class="form-control form-control-sm py-0" style="font-size: 0.75rem;" placeholder="Catatan (opsional)" value="<?= htmlspecialchars($surat['catatan_admin']) ?>">
-                                            <button type="submit" name="update_surat" class="btn btn-navy btn-sm py-0" style="font-size: 0.75rem;">Simpan</button>
+                                            <input type="text" name="catatan_admin" class="form-control form-control-sm py-1.5" style="font-size: 0.78rem;" placeholder="Catatan (opsional)" value="<?= htmlspecialchars($surat['catatan_admin']) ?>">
+                                            <button type="submit" name="update_surat" class="btn btn-primary-blue btn-sm py-1.5" style="font-size: 0.78rem;">Simpan</button>
                                         </form>
                                     </td>
                                 </tr>
                             <?php endwhile; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="5" class="text-center py-4 text-muted">Belum ada pengajuan surat masuk.</td>
+                                <td colspan="5" class="text-center py-4" style="color: var(--text-secondary);">Belum ada pengajuan surat masuk.</td>
                             </tr>
                         <?php endif; ?>
                     </tbody>
@@ -239,7 +442,7 @@ $q_daftar_antrean = mysqli_query($conn, "SELECT a.*, u.nama_lengkap FROM antrean
 
     </main>
 
-    <footer class="bg-white border-top py-3 mt-auto text-center small text-muted">
+    <footer class="py-3 mt-auto text-center small">
         &copy; 2026 Layanan Publik Digital &bull; Panel Administrator
     </footer>
 
